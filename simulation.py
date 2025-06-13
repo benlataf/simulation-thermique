@@ -5,35 +5,12 @@ import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('TkAgg')  # Force le backend Tk
 
-# === Paramètres géométriques du cylindre ===
-diametre = 0.075   # m
-hauteur = 0.15   # m
-rayon = diametre / 2
-volume = np.pi * rayon**2 * hauteur  # m³
-surface = 2 * np.pi * rayon**2 + 2 * np.pi * rayon * hauteur  # m²
-
-# === Températures ===
-T_initial = 38         # °C
-T_ambiante = 39        # °C
-
 # === Matériaux et propriétés thermiques ===
 materiaux = {
     "Aluminium": {"rho": 2700, "cp": 900},
     "Acier": {"rho": 7850, "cp": 490},
     "Cuivre": {"rho": 8960, "cp": 385},
     "Plastique (ABS)": {"rho": 1040, "cp": 1300},
-}
-
-# === Coefficients de convection (ventilation) ===
-h_values = [10, 25, 50]  # W/m²·K
-linestyles = ['-', '--', ':']  # Pour les h croissants
-
-# === Couleurs par matériau ===
-couleurs_materiaux = {
-    "Aluminium": 'blue',
-    "Acier": 'red',
-    "Cuivre": 'green',
-    "Plastique (ABS)": 'purple'
 }
 
 # === Temps de simulation ===
@@ -66,6 +43,14 @@ def lancer_simulation():
 
         plt.figure(figsize=(8, 4))
         plt.plot(t / 60, T, label=f"{mat}, h={h_conv} W/m²K", color=couleur)
+        # Calcul des temps caractéristiques
+        t95 = -tau * np.log(0.05)
+        t99 = -tau * np.log(0.01)
+        t999 = -tau * np.log(0.001)
+        # Tracer les lignes verticales
+        plt.axvline(t95 / 60, color='orange', linestyle='--', label=f'95% atteint ({t95/60:.1f} min)')
+        plt.axvline(t99 / 60, color='red', linestyle='--', label=f'99% atteint ({t99/60:.1f} min)')
+        plt.axvline(t999 / 60, color='purple', linestyle=':', label=f'≈100% atteint ({t999/60:.1f} min)')
         plt.axhline(T_env, color='gray', linestyle='--', label="Température ambiante")
         plt.xlabel("Temps (minutes)")
         plt.ylabel("Température (°C)")
