@@ -1,3 +1,4 @@
+__version__ = "dev"
 import tkinter as tk
 from tkinter import ttk, StringVar, DoubleVar
 import numpy as np
