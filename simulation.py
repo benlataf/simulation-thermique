@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, StringVar, DoubleVar
 import numpy as np
 import matplotlib.pyplot as plt
+plt.ion()  # Activate interactive mode so show() doesn't block Tkinter
 import matplotlib
 matplotlib.use('TkAgg')  # Force le backend Tk
 
@@ -11,6 +12,13 @@ materiaux = {
     "Acier": {"rho": 7850, "cp": 490},
     "Cuivre": {"rho": 8960, "cp": 385},
     "Plastique (ABS)": {"rho": 1040, "cp": 1300},
+}
+
+couleurs_materiaux = {
+    "Aluminium": "blue",
+    "Acier": "red",
+    "Cuivre": "green",
+    "Plastique (ABS)": "purple"
 }
 
 # === Temps de simulation ===
@@ -54,11 +62,11 @@ def lancer_simulation():
         plt.axhline(T_env, color='gray', linestyle='--', label="Température ambiante")
         plt.xlabel("Temps (minutes)")
         plt.ylabel("Température (°C)")
-        plt.title("Simulation thermique d’un cylindre")
+        plt.title("Simulation thermique pour un cylindre (lumped capacity model)")
         plt.legend()
         plt.grid(True)
         plt.tight_layout()
-        plt.show()
+        plt.show(block=False)
     except ValueError:
         print("Erreur : vérifiez que tous les champs sont bien remplis.")
 
