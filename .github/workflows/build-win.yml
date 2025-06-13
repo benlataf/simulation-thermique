@@ -26,9 +26,7 @@ jobs:
 
     - name: Build EXE with PyInstaller
       run: |
-        pyinstaller --noconfirm --onefile --windowed ^
-          --name SimulationThermique ^
-          simulation.py
+        pyinstaller --noconfirm --onefile --windowed --name SimulationThermique simulation.py
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
