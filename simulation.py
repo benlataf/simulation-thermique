@@ -23,7 +23,7 @@ couleurs_materiaux = {
 }
 
 # === Temps de simulation ===
-t = np.linspace(0, 10800, 500)  # en secondes (0 à 3 h)
+t = np.linspace(0, 18000, 500)  # en secondes (0 à 5 h)
 
 
 
